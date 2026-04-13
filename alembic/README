@@ -1,1 +1,176 @@
-Generic single-database configuration.
+Backend Project (FastAPI)
+
+This repository contains a backend application developed using FastAPI.
+The project is designed to simulate a SaaS-based system with features such as user management, authentication, project handling, subscriptions, payments, and notifications.
+
+
+
+Overview
+
+The application provides a structured backend system with the following capabilities:
+
+- User registration and login with OTP verification
+- Secure authentication using JWT tokens
+- Role-based access control (Admin and User)
+- Project and task management
+- Subscription system (Free and Pro plans)
+- Payment handling using Stripe
+- Notification system for user updates
+- Admin dashboard for monitoring platform activity
+
+
+
+Key Features
+
+User Module
+
+- Register new users
+- OTP-based account verification
+- Login with secure password hashing
+- View user profile
+
+
+
+Project & Task Module
+
+- Create, update, delete projects
+- Each user can manage their own projects
+- Free users are limited to 3 projects
+- Pro users have no limit
+- Tasks can be created under each project
+
+
+
+Subscription Module
+
+- Default plan assigned during registration (Free plan)
+- Upgrade to Pro plan via payment
+- Subscription details stored and managed in database
+
+
+
+Payment Integration
+
+- Stripe Checkout integration
+- Payment success handling
+- Payment details stored in database
+
+
+
+Notification System
+
+- Notifications created for important actions such as:
+  - Payment success
+  - Admin messages
+- Users can view and manage notifications
+
+
+
+Admin Module
+
+- View all users
+- Activate / deactivate users
+- View subscriptions and payments
+- View platform analytics:
+  - Total users
+  - Total projects
+  - Total revenue
+
+
+
+Technology Stack
+
+- FastAPI
+- SQLAlchemy
+- MySQL
+- Alembic
+- JWT Authentication
+- Stripe API
+
+
+
+Project Structure
+
+backend_project/
+│
+├── app/
+│   ├── main.py
+│   ├── db/                
+│   ├── modules/           
+│   ├── routes/            
+│   ├── schemas/           
+│   ├── services/          
+│   └── utils/             
+│
+├── alembic/               
+├── .env                 
+├── .gitignore
+└── README.md
+
+
+
+Setup Instructions
+
+1. Clone the repository
+
+git clone https://github.com/karthikeyansureshkumar/backend_project.git
+cd backend_project
+
+
+
+2. Create virtual environment
+
+python -m venv venv
+venv\Scripts\activate
+
+
+
+3. Install dependencies
+
+pip install -r requirements.txt
+
+
+
+4. Configure environment variables
+
+Create a ".env" file in the root directory and add:
+
+DATABASE_URL=your_database_url
+SECRET_KEY=your_secret_key
+STRIPE_API_KEY=your_stripe_key
+
+
+
+5. Run database migrations
+
+alembic upgrade head
+
+
+
+6. Run the application
+
+uvicorn app.main:app --reload
+
+
+
+7. Access API documentation
+
+http://127.0.0.1:8000/docs
+
+
+
+Security Notes
+
+- ".env" file is excluded using ".gitignore"
+- Sensitive data such as API keys should not be committed
+- Always use test keys for development
+
+
+
+Future Improvements
+
+- Add unit and integration tests
+- Improve logging and monitoring
+- Add Docker support
+- Deploy to cloud platform
+

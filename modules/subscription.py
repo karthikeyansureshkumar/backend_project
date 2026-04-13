@@ -9,7 +9,7 @@ class Subscription(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     plan_id = Column(Integer, ForeignKey("plans.id"))
 
-    stripe_customer_id = Column(String(255)) 
-    stripe_subscription_id = Column(String(255)) 
+    stripe_customer_id = Column(String(255))
+    stripe_subscription_id = Column(String(255))
 
-    plan = Column(String(50), default="PRO") 
+    plan = Column(String(50), default="FREE")

@@ -5,8 +5,6 @@ from db.database import get_db
 from modules.project import Project
 from schemas.project import ProjectCreate
 from utils.security import get_current_user
-
-# ✅ ADDED
 from modules.subscription import Subscription
 
 router = APIRouter()
@@ -18,29 +16,27 @@ def create_project(
     db: Session = Depends(get_db),
     user = Depends(get_current_user)
 ):
-    # ✅ Get subscription
+    
     subscription = db.query(Subscription).filter(
         Subscription.user_id == user.id
     ).first()
 
-    # ✅ Count projects
+    
     project_count = db.query(Project).filter(
         Project.owner_id == user.id
     ).count()
 
-    # 🔥 FINAL LOGIC
-    if not subscription:
-        # ❌ FREE → limit 3
-        if project_count >= 3:
-            raise HTTPException(
-                status_code=403,
-                detail="Free limit reached (3). Upgrade to Pro"
-            )
-    else:
-        # ✅ PRO → unlimited
-        pass
+    print("PLAN:", subscription.plan)
+    print("COUNT:", project_count)
+    
+    if not subscription or subscription.plan == "FREE":
+     if project_count >= 3:
+        raise HTTPException(
+            status_code=403,
+            detail="Free limit reached (3). Upgrade to Pro"
+        )
 
-    # 🔹 ORIGINAL CODE
+    
     new_project = Project(
         name=project.name,
         description=project.description,

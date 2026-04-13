@@ -54,7 +54,8 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
     subscription = Subscription(
         user_id=new_user.id,
-        plan_id=free_plan.id
+        plan_id=free_plan.id,
+        plan="FREE"
     )
 
     db.add(subscription)
